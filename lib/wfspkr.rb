@@ -32,9 +32,7 @@
 module Wfspkr
   # If it's OK to use unicode suit symbols in output or not.
   SUIT_UNICODE_OK = true
-  # Set this to true to display the built in tests
-  SHOW_BUILTIN_TESTS = true    
-  
+ 
   
   # The rank of a card. It was not in the specs, but it's 
   # cleaner to define a spearate class than to use a string or such 

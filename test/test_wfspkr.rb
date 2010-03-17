@@ -32,7 +32,7 @@ require "wfspkr"
 
 
 # Built in tests
-if __FILE__ == $0 && Wfspkr::SHOW_BUILTIN_TESTS
+if __FILE__ == $0 
   
   include Wfspkr
   # Wfspkr::SUIT_UNICODE_OK = true (default) 
@@ -71,25 +71,33 @@ if __FILE__ == $0 && Wfspkr::SHOW_BUILTIN_TESTS
                  Card.to_card('d6'), Card.to_card('h6'))
   puts h2.to_s
   p h2.five_of_a_kind?
-  # should be false now, because no more 2 wildcards
+  # Should be false now, because no more 2 wildcards
   p h2.four_of_a_kind?
-  # should still be true   
-  h3 = Hand.to_hand('♥2 ♠4 ♣4 ♦4 ♥3')
+  # Should still be true   
+  
+  # To_hand generats a hand based upon a short descrption.
+  h3 = Hand.to_hand('♥2 ♠4 ♣4 ♦4 ♥3')  
   puts h3.to_s
+  # Should be true for three of a kind and false for four of a kind
   p h3.three_of_a_kind?
   p h3.four_of_a_kind?
+  
   h4 = Hand.to_hand('♥2 ♠4 ♣4 ♦5 ♥3')
   puts h4.to_s
+  # Should be true for pair of a kind and false for three of a kind
   p h4.three_of_a_kind?
   p h4.pair?
-
+  
   h5 = Hand.to_hand('♥2 ♠4 ♣4 ♦5 ♥5')
+  # Should be true for both pair and two pair
   puts h5.to_s
   p h5.two_pair?
   p h5.pair?
 
-  h6 = Hand.to_hand('♥2 ♠4 ♣8 ♦5 ♥Q')
+  
+  h6 = Hand.to_hand('♥2 ♠4 ♣8 ♦5 ♥Q')  
   puts h6.to_s
+  # Should be false for all cases
   p h6.two_pair?
   p h6.pair?
   p h6.full_house?
@@ -99,6 +107,7 @@ if __FILE__ == $0 && Wfspkr::SHOW_BUILTIN_TESTS
   
   h7 = Hand.to_hand('♥7 ♥8 ♥9 ♥T ♥J')
   puts h7.to_s
+  # Should be true for all three straight, flush and straight flush
   p h7.straight?
   p h7.flush?
   p h7.straight_flush?
@@ -106,6 +115,8 @@ if __FILE__ == $0 && Wfspkr::SHOW_BUILTIN_TESTS
    
   h8 = Hand.to_hand('♥2 ♠2 ♣2 ♦Q ♥Q')
   puts h8.to_s
+  # Should be true for two pairn, pair, full house, but false for 
+  # four of a kind
   p h8.two_pair?
   p h8.pair?
   p h8.full_house?
@@ -113,47 +124,54 @@ if __FILE__ == $0 && Wfspkr::SHOW_BUILTIN_TESTS
   p h8 <=> h7
   puts "---"
   a = [ h6, h7, h8 ]
+  # Hand valuing and sorting tests. 
   puts a.sort
-  
+  puts "---"
+  # Straight flushes, low and high
   h9  = Hand.to_hand('♦A ♦2 ♦3 ♦4 ♦5')
   h10 = Hand.to_hand('♥A ♥K ♥Q ♥J ♥10')
   puts [h9, h10].sort
   puts "---"
+  # pairs and two pairs
   h11 = Hand.to_hand('♦10 ♥10 ♦3 ♦5 ♦7')
   h12 = Hand.to_hand('♦K ♥K ♥Q ♥J ♥10')
   h13 = Hand.to_hand('♣K ♠K ♥J ♥J ♥A')
   puts [h11, h12, h13].sort
   puts "---"
+  # Two pairs
   h14 = Hand.to_hand('♦K ♥K ♥Q ♦Q ♥10')
   h15 = Hand.to_hand('♣K ♠K ♣J ♠J ♥A')
   h16 = Hand.to_hand('♣K ♠K ♣J ♠J ♥10')
   puts [h14, h15, h16].sort
-  puts "---"  
+  puts "---" 
+  # Three of a kinds 
   h17 = Hand.to_hand('♦K ♥K ♥K ♦Q ♥10')
   h18 = Hand.to_hand('♣K ♠K ♣K ♠J ♥A')  
   puts [h17, h18].sort
   puts "---"
+  # Flushes
   h19 = Hand.to_hand('♦K ♦J ♦10 ♦8 ♦6')
   h20 = Hand.to_hand('♣K ♣J ♣10 ♣8 ♣A')  
   puts [h19, h20].sort
-  puts "---"  
+  puts "---"
+  # Straight flushes
   h21 = Hand.to_hand('♦A ♦K ♦Q ♦J ♦10')
   h22 = Hand.to_hand('♣K ♣Q ♣J ♣10 ♣9')  
   puts [h21, h22].sort
   puts "---"
-  
+  # Four of a kind with and without wildcards
   h23 = Hand.to_hand('♦K ♥K ♣K ♠K ♥6')
   h24 = Hand.to_hand('♦Q ♥Q ♣Q ♠Q ♠6')
   h25 = Hand.to_hand('♦K ♥K ♣K ♠K ♥3')
   h26 = Hand.to_hand('♦Q ♥Q ♣Q ♠Q ♠3')  
   puts [h23, h24, h25, h26].sort  
   puts "---"
-  
+  # Full houses
   h27 = Hand.to_hand('♦K ♥K ♣K ♠A ♥A')
   h28 = Hand.to_hand('♦K ♥K ♣K ♥Q ♠Q')
   puts [h27, h28].sort  
   puts "---"
-
+  # Two pairs again
   h27 = Hand.to_hand('♦K ♥K ♣7 ♠A ♥A')
   h28 = Hand.to_hand('♣K ♠K ♣5 ♥Q ♠Q')
   puts [h27, h28].sort  
