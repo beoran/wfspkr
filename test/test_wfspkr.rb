@@ -35,7 +35,6 @@ require "wfspkr"
 if __FILE__ == $0 
   
   include Wfspkr
-  # Wfspkr::SUIT_UNICODE_OK = true (default) 
   # Use the unicode symbols '♠♣♦♥' for nicer display
   p Rank::Ace
   p Rank::RANKS
